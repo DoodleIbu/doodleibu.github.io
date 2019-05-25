@@ -6,6 +6,8 @@ let filterDays = -1;
 function displayPlayerRanking() {
     let mostRecentPlayerRating = {}
 
+    console.log(ratings);
+
     // There's very likely a better way to do this.
     ratings.forEach(function(rating) {
         if (!(rating["id"] in mostRecentPlayerRating)) {
