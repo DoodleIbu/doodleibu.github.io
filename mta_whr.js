@@ -1,21 +1,24 @@
 // Populate via CSV
-// let players = {123: "test", 456: "test2"};
-// let events = {123456: "shining finger sword"};
-// let sets = [
-//     {"player1_id": 123, "player2_id": 456, "day": 1, "winner": "B", "event_id": 123456},
-//     {"player1_id": 123, "player2_id": 456, "day": 2, "winner": "B", "event_id": 123456},
-// ];
-// let ratings = [
-//     {"player_id": 123, "day": 1, "rating": 20},
-//     {"player_id": 456, "day": 1, "rating": -20},
-//     {"player_id": 123, "day": 2, "rating": 40},
-//     {"player_id": 456, "day": 2, "rating": -40},
-// ];
-
 let players = {};
 let events = {};
 let sets = [];
 let ratings = [];
+
+// Use test data if run locally.
+if (location.hostname === "") {
+    players = {123: "test", 456: "test2"};
+    events = {123456: "shining finger sword"};
+    sets = [
+        {"player1_id": 123, "player2_id": 456, "day": 1, "winner": "B", "event_id": 123456},
+        {"player1_id": 123, "player2_id": 456, "day": 2, "winner": "B", "event_id": 123456},
+    ];
+    ratings = [
+        {"player_id": 123, "day": 1, "rating": 20},
+        {"player_id": 456, "day": 1, "rating": -20},
+        {"player_id": 123, "day": 2, "rating": 40},
+        {"player_id": 456, "day": 2, "rating": -40},
+    ];
+}
 
 const RATING_FUDGE = 1000;
 const MTA_RELEASE_DATE = new Date(2018, 5, 22);
@@ -79,10 +82,17 @@ function displayPlayerRankings(filterDays) {
         $(".player-rankings-list").append(
             "<tr class='player-rank'>" +
                 "<td>" + (index + 1) + "</td>" +
-                "<td>" + players[rank["player_id"]] + "</td>" +
+                "<td><a class='player-rating-history-link' href='#player-rating-history' data-playerid='" + rank["player_id"] + "'>" +
+                    players[rank["player_id"]] + "</a></td>" +
                 "<td>" + Math.round(rank["rating"]) + "</td>" +
             "</tr>"
         );
+    });
+
+    $(".player-rating-history-link").on("click", function(event) {
+        let selectedPlayerId = parseInt($(event.target).data("playerid"));
+        $(".player-select").val(selectedPlayerId);
+        displayPlayerSets(selectedPlayerId);
     });
 }
 
@@ -149,10 +159,6 @@ $(".player-select").on("change", function(){
         displayPlayerSets(selectedPlayerId);
     }
 });
-
-function displayPlayerRatingHistory() {
-
-}
 
 function initialLoad() {
     if (Object.keys(players).length === 0 || Object.keys(events).length === 0 || 
