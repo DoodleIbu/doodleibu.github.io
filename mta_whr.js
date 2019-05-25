@@ -9,14 +9,14 @@ function displayPlayerRanking() {
     // There's very likely a better way to do this.
     ratings.forEach(function(rating) {
         if (!(rating["id"] in mostRecentPlayerRating)) {
-            mostRecentPlayerRating["id"] = {
+            mostRecentPlayerRating[rating["id"]] = {
                 "day": rating["day"],
                 "rating": rating["rating"],
             }
         }
 
-        if (mostRecentPlayerRating["id"]["day"] < rating["day"]) {
-            mostRecentPlayerRating["id"] = {
+        if (mostRecentPlayerRating[rating["id"]]["day"] < rating["day"]) {
+            mostRecentPlayerRating[rating["id"]] = {
                 "day": rating["day"],
                 "rating": rating["rating"],
             }
