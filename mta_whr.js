@@ -6,8 +6,6 @@ let filterDays = -1;
 function displayPlayerRanking() {
     let mostRecentPlayerRating = {}
 
-    console.log(ratings);
-
     // There's very likely a better way to do this.
     ratings.forEach(function(rating) {
         if (!(rating["id"] in mostRecentPlayerRating)) {
@@ -55,7 +53,7 @@ fetch("data/player.csv").then(response => response.text()).then(text => {
         dynamicTyping: true,
     });
 
-    players = parsed;
+    players = parsed["data"];
     update();
 });
 
@@ -66,7 +64,7 @@ fetch("data/rating.csv").then(response => response.text()).then(text => {
         dynamicTyping: true,
     });
 
-    ratings = parsed;
+    ratings = parsed["data"];
     update();
 });
 
@@ -77,7 +75,7 @@ fetch("data/sets.csv").then(response => response.text()).then(text => {
         dynamicTyping: true,
     });
 
-    sets = parsed;
+    sets = parsed["data"];
     update();
 });
 
