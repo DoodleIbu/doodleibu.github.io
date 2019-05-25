@@ -8,15 +8,15 @@ function displayPlayerRanking() {
 
     // There's very likely a better way to do this.
     ratings.forEach(function(rating) {
-        if (!(rating["id"] in mostRecentPlayerRating)) {
-            mostRecentPlayerRating[rating["id"]] = {
+        if (!(rating["player_id"] in mostRecentPlayerRating)) {
+            mostRecentPlayerRating[rating["player_id"]] = {
                 "day": rating["day"],
                 "rating": rating["rating"],
             }
         }
 
-        if (mostRecentPlayerRating[rating["id"]]["day"] < rating["day"]) {
-            mostRecentPlayerRating[rating["id"]] = {
+        if (mostRecentPlayerRating[rating["player_id"]]["day"] < rating["day"]) {
+            mostRecentPlayerRating[rating["player_id"]] = {
                 "day": rating["day"],
                 "rating": rating["rating"],
             }
@@ -25,7 +25,7 @@ function displayPlayerRanking() {
 
     let ranking = Object.keys(mostRecentPlayerRating).map(function(key) {
         return {
-            "id": key,
+            "player_id": key,
             "day": mostRecentPlayerRating[key]["day"],
             "rating": mostRecentPlayerRating[key]["rating"],
         }
