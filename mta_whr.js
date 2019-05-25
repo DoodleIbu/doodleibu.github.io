@@ -92,7 +92,7 @@ function displayPlayerRankings(filterDays) {
     $(".player-rating-history-link").on("click", function(event) {
         let selectedPlayerId = parseInt($(event.target).data("playerid"));
         $(".player-select").val(selectedPlayerId);
-        displayPlayerSets(selectedPlayerId);
+        changePlayer();
     });
 }
 
@@ -151,14 +151,16 @@ function displayPlayerSets(playerId) {
     });
 }
 
-$(".player-select").on("change", function(){
+function changePlayer() {
     $(".player-sets .player-set").remove();
 
     let selectedPlayerId = parseInt($(".player-select").val());
     if (selectedPlayerId != -1) {
         displayPlayerSets(selectedPlayerId);
     }
-});
+}
+
+$(".player-select").on("change", changePlayer);
 
 function initialLoad() {
     if (Object.keys(players).length === 0 || Object.keys(events).length === 0 || 
