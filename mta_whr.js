@@ -70,7 +70,7 @@ function displayPlayerRankings(filterDays) {
     // Display rankings.
     $(".player-rankings-list").empty();
     rankings.forEach(function(rank, index) {
-        $(".player-rankings-list").append("<div class='player-ranking'>" + (index + 1) + " - " + players[rank["player_id"]] + ": " + rank["rating"] + "</div>");
+        $(".player-rankings-list").append("<div class='player-ranking'>" + (index + 1) + " - " + players[rank["player_id"]] + ": " + Math.round(rank["rating"]) + "</div>");
     });
 }
 
@@ -123,7 +123,7 @@ function displayPlayerSets(playerId) {
                 "<td>" + winnerName + "</td>" +
                 "<td>" + events[set["event_id"]] + "</td>" +
                 "<td>" + setDateString + "</td>" +
-                "<td>" + setRating + "</td>" +
+                "<td>" + Math.round(setRating) + "</td>" +
             "</tr>"
         );
     });
