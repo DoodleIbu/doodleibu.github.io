@@ -7,10 +7,30 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.3/papaparse.min.js"></script>
+    <style>
+        .player-rankings-list {
+            margin-top: 20px;
+        }
+
+        .player-sets {
+            margin-top: 20px;
+        }
+
+        .sup {
+            position: fixed;
+            bottom: 10px;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="guide-shameless-plug">If you need help in Mario Tennis Aces's Standard mode, check out <a href="https://docs.google.com/document/d/1u9KkaubaQaHZNp9KsS7-a5D-eNcpW321zu80n-PBRo4/edit">this guide!</a>
+    <p class="feedback">
+        If you have any questions or feedback about this page, please contact ibuprofen in the Mario Tennis Aces Club discord.
+    </p>
+
+    <p class="guide-shameless-plug">
+        If you need help in Mario Tennis Aces's Standard mode, check out <a href="https://docs.google.com/document/d/1u9KkaubaQaHZNp9KsS7-a5D-eNcpW321zu80n-PBRo4/edit">this guide!</a>
+    </p>
 
     <div class="player-rankings">
         <h1>Mario Tennis Aces Club Standard Rankings</h1>
@@ -27,8 +47,23 @@
     <div class="player-rating-history">
         <h1>Player Rating History</h1>
 
-        <select class="player-select"></select>
-        <div class="player-sets"></div>
+        <select class="player-select">
+            <option value="-1">Select player</option>
+        </select>
+        <table class="player-sets">
+            <tr class="player-sets-header">
+                <th>Player 1</th>
+                <th>Player 2</th>
+                <th>Winner</th>
+                <th>Tournament</th>
+                <th>Date</th>
+                <th>Rating</th>
+            </tr>
+        </table>
+    </div>
+
+    <div class="sup">
+        sup
     </div>
 
     <script type="text/javascript" src="mta_whr.js"></script>
