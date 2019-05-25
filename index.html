@@ -5,9 +5,24 @@
     <meta charset="UTF-8">
     <title>Mario Tennis Aces Club Ratings</title>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.3/papaparse.min.js"></script>script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.3/papaparse.min.js"></script>
 </head>
 
 <body>
+    <div class="player-rankings">
+        <span>Filter by players that have played within the last</span>
+        <input class="player-rankings-filter-days-input" type="number"></input>
+        <span>days.</span>
+
+        <button class="player-rankings-filter-button">Filter!</button>
+
+        <div class="player-rankings-list"></div>
+    </div>
+
+    <div class="player-rating-history">
+        <select class="player-select"></select>
+        <div class="player-sets"></div>
+    </div>
+
     <script type="text/javascript" src="mta_whr.js"></script>
 </body>
