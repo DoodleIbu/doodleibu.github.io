@@ -1,21 +1,21 @@
 // Populate via CSV
-let players = {123: "test", 456: "test2"};
-let events = {123456: "shining finger sword"};
-let sets = [
-    {"player1_id": 123, "player2_id": 456, "day": 1, "winner": "B", "event_id": 123456},
-    {"player1_id": 123, "player2_id": 456, "day": 2, "winner": "B", "event_id": 123456},
-];
-let ratings = [
-    {"player_id": 123, "day": 1, "rating": 20},
-    {"player_id": 456, "day": 1, "rating": -20},
-    {"player_id": 123, "day": 2, "rating": 40},
-    {"player_id": 456, "day": 2, "rating": -40},
-];
+// let players = {123: "test", 456: "test2"};
+// let events = {123456: "shining finger sword"};
+// let sets = [
+//     {"player1_id": 123, "player2_id": 456, "day": 1, "winner": "B", "event_id": 123456},
+//     {"player1_id": 123, "player2_id": 456, "day": 2, "winner": "B", "event_id": 123456},
+// ];
+// let ratings = [
+//     {"player_id": 123, "day": 1, "rating": 20},
+//     {"player_id": 456, "day": 1, "rating": -20},
+//     {"player_id": 123, "day": 2, "rating": 40},
+//     {"player_id": 456, "day": 2, "rating": -40},
+// ];
 
-// let players = {};
-// let events = {};
-// let sets = [];
-// let ratings = [];
+let players = {};
+let events = {};
+let sets = [];
+let ratings = [];
 
 const MTA_RELEASE_DATE = new Date(2018, 5, 22);
 
@@ -151,8 +151,6 @@ function initialLoad() {
     displayPlayerRankings(-1);
 }
 
-initialLoad();
-
 fetch("data/player.csv").then(response => response.text()).then(text => {
     let parsed = Papa.parse(text, {
         header: true,
@@ -174,7 +172,7 @@ fetch("data/events.csv").then(response => response.text()).then(text => {
         dynamicTyping: true,
     });
 
-    players = parsed["data"].reduce(function(map, obj) {
+    events = parsed["data"].reduce(function(map, obj) {
         map[obj["id"]] = obj["name"];
         return map;
     }, {});
