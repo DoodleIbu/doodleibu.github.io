@@ -14,7 +14,7 @@ function displayPlayerRanking() {
     let currentDate = new Date();
     let mtaReleaseDate = new Date(2018, 5, 22)
     let oneDay = 24 * 60 * 60 * 1000;
-    let daysSinceRelease = Math.round(Math.abs((currentDate.getTime() - daysSinceRelease.getTime()) / (oneDay)));
+    let daysSinceRelease = Math.round(Math.abs((currentDate.getTime() - mtaReleaseDate.getTime()) / oneDay));
 
     // Filter out ratings that occur before daysSinceRelease - filterDays.
     let daysMustBeEqualOrGreaterThan = daysSinceRelease - filterDays;
