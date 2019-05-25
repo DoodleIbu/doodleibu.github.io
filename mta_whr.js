@@ -94,7 +94,7 @@ function displayPlayerSets(playerId) {
     });
 
     playerSets.sort(function(first, second) {
-        return first["day"] - second["day"];
+        return second["day"] - first["day"];
     });
 
     playerSets.forEach(function(set) {
