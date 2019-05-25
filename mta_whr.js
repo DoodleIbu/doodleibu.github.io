@@ -3,22 +3,37 @@ let ratings = []
 let sets = []
 let filterDays = -1;
 
+$(".player-rankings-filter-days-input").on("click", function() {
+    filterDays = $(".player-rankings-filter-days-input").val();
+    update();
+});
+
 function displayPlayerRanking() {
     let mostRecentPlayerRating = {}
 
+    let currentDate = new Date();
+    let mtaReleaseDate = new Date(2018, 5, 22)
+    let oneDay = 24 * 60 * 60 * 1000;
+    let daysSinceRelease = Math.round(Math.abs((currentDate.getTime() - daysSinceRelease.getTime()) / (oneDay)));
+
+    // Filter out ratings that occur before daysSinceRelease - filterDays.
+    let daysMustBeEqualOrGreaterThan = daysSinceRelease - filterDays;
+
     // There's very likely a better way to do this.
     ratings.forEach(function(rating) {
-        if (!(rating["player_id"] in mostRecentPlayerRating)) {
-            mostRecentPlayerRating[rating["player_id"]] = {
-                "day": rating["day"],
-                "rating": rating["rating"],
+        if (filterDays != -1 && rating["day"] >= daysMustBeEqualOrGreaterThan) {
+            if (!(rating["player_id"] in mostRecentPlayerRating)) {
+                mostRecentPlayerRating[rating["player_id"]] = {
+                    "day": rating["day"],
+                    "rating": rating["rating"],
+                }
             }
-        }
 
-        if (mostRecentPlayerRating[rating["player_id"]]["day"] < rating["day"]) {
-            mostRecentPlayerRating[rating["player_id"]] = {
-                "day": rating["day"],
-                "rating": rating["rating"],
+            if (mostRecentPlayerRating[rating["player_id"]]["day"] < rating["day"]) {
+                mostRecentPlayerRating[rating["player_id"]] = {
+                    "day": rating["day"],
+                    "rating": rating["rating"],
+                }
             }
         }
     });
