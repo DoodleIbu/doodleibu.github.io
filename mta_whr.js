@@ -68,9 +68,15 @@ function displayPlayerRankings(filterDays) {
     });
 
     // Display rankings.
-    $(".player-rankings-list").empty();
+    $(".player-rankings-list .player-rank").remove();
     rankings.forEach(function(rank, index) {
-        $(".player-rankings-list").append("<div class='player-ranking'>" + (index + 1) + " - " + players[rank["player_id"]] + ": " + Math.round(rank["rating"]) + "</div>");
+        $(".player-rankings-list").append(
+            "<tr class='player-rank'>" +
+                "<td>" + (index + 1) + "</td>" +
+                "<td>" + players[rank["player_id"]] + "</td>" +
+                "<td>" + Math.round(rank["rating"]) + "</td>" +
+            "</tr>"
+        );
     });
 }
 
@@ -151,6 +157,8 @@ function initialLoad() {
     populatePlayerDropdown();
     displayPlayerRankings(-1);
 }
+
+initialLoad();
 
 fetch("data/players.csv").then(response => response.text()).then(text => {
     let parsed = Papa.parse(text, {
