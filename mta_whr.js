@@ -3,7 +3,7 @@ let ratings = []
 let sets = []
 let filterDays = -1;
 
-$(".player-rankings-filter-days-button").on("click", function() {
+$(".player-rankings-filter-button").on("click", function() {
     filterDays = $(".player-rankings-filter-days-input").val();
     update();
 });
