@@ -37,7 +37,7 @@ function displayPlayerRanking() {
 
     $(".player-rankings-list").empty();
     ranking.forEach(function(rank, index) {
-        $("player-rankings-list").append("<div class='player-ranking'>" + (index + 1) + " - " + players[rank["player_id"]] + ": " + rank["rating"] + "</div>");
+        $(".player-rankings-list").append("<div class='player-ranking'>" + (index + 1) + " - " + players[rank["player_id"]] + ": " + rank["rating"] + "</div>");
     });
 }
 
