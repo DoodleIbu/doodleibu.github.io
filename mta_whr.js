@@ -153,7 +153,7 @@ function initialLoad() {
     displayPlayerRankings(-1);
 }
 
-fetch("data/player.csv").then(response => response.text()).then(text => {
+fetch("data/players.csv").then(response => response.text()).then(text => {
     let parsed = Papa.parse(text, {
         header: true,
         skipEmptyLines: true,
@@ -192,7 +192,7 @@ fetch("data/sets.csv").then(response => response.text()).then(text => {
     initialLoad();
 });
 
-fetch("data/rating.csv").then(response => response.text()).then(text => {
+fetch("data/ratings.csv").then(response => response.text()).then(text => {
     let parsed = Papa.parse(text, {
         header: true,
         skipEmptyLines: true,
