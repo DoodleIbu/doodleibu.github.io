@@ -21,7 +21,7 @@ function displayPlayerRanking() {
 
     // There's very likely a better way to do this.
     ratings.forEach(function(rating) {
-        if (filterDays != -1 && rating["day"] >= daysMustBeEqualOrGreaterThan) {
+        if (filterDays == -1 || rating["day"] >= daysMustBeEqualOrGreaterThan) {
             if (!(rating["player_id"] in mostRecentPlayerRating)) {
                 mostRecentPlayerRating[rating["player_id"]] = {
                     "day": rating["day"],
