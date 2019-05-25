@@ -21,7 +21,13 @@ const RATING_FUDGE = 1000;
 const MTA_RELEASE_DATE = new Date(2018, 5, 22);
 
 function populatePlayerDropdown() {
-    Object.keys(players).forEach(function(key) {
+    sortedPlayers = Object.keys(players).sort(function(first, second) {
+        let firstName = players[first].toUpperCase();
+        let secondName = players[second].toUpperCase();
+        return (firstName < secondName) ? -1 : (firstName > secondName) ? 1 : 0;
+    });
+
+    sortedPlayers.forEach(function(key) {
         $(".player-select").append("<option value='" + key + "'>" + players[key] + "</option>");
     });
 }
