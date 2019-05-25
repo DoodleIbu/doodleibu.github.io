@@ -115,6 +115,8 @@ function displayPlayerSets(playerId) {
             return rating["player_id"] === playerId && rating["day"] === set["day"];
         })["rating"];
 
+        console.log(events);
+
         $(".player-sets").append(
             "<tr class='player-set'>" +
                 "<td>" + players[set["player1_id"]] + "</td>" +
