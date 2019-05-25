@@ -10,7 +10,7 @@ fetch("data/player.csv").then(response => response.text()).then(text => {
     });
 
     players = parsed;
-    console.log(csv);
+    console.log(parsed);
 });
 
 fetch("data/rating.csv").then(response => response.text()).then(text => {
@@ -21,18 +21,18 @@ fetch("data/rating.csv").then(response => response.text()).then(text => {
     });
 
     ratings = parsed;
-    console.log(csv);
+    console.log(parsed);
 });
 
 fetch("data/sets.csv").then(response => response.text()).then(text => {
-    let csv = Papa.parse(text, {
+    let parsed = Papa.parse(text, {
         header: true,
         skipEmptyLines: true,
         dynamicTyping: true,
     });
 
     sets = parsed;
-    console.log(csv);
+    console.log(parsed);
 });
 
 
