@@ -1,4 +1,6 @@
-// Populate via CSV
+const RATING_FUDGE = 1000;
+const MTA_RELEASE_DATE = new Date(2018, 5, 22);
+
 let players = {};
 let events = {};
 let sets = [];
@@ -20,21 +22,17 @@ if (location.hostname === "") {
     ];
 }
 
-const RATING_FUDGE = 1000;
-const MTA_RELEASE_DATE = new Date(2018, 5, 22);
-
-function populatePlayerDropdown() {
-    sortedPlayers = Object.keys(players).sort(function(first, second) {
-        let firstName = players[first].toUpperCase();
-        let secondName = players[second].toUpperCase();
-        return (firstName < secondName) ? -1 : (firstName > secondName) ? 1 : 0;
-    });
-
-    sortedPlayers.forEach(function(key) {
-        $(".player-select").append("<option value='" + key + "'>" + players[key] + "</option>");
-    });
+// Get the calendar date for when a set occurs, as opposed to "days since MTA release".
+function getSetDate(set) {
+    let setDate = new Date(MTA_RELEASE_DATE.getTime());
+    setDate.setDate(setDate.getDate() + set["day"]);
+    return setDate;
 }
 
+/*  ===============
+    Player rankings
+    ===============
+ */
 function displayPlayerRankings(filterDays) {
     let mostRecentPlayerRating = {}
 
@@ -45,7 +43,7 @@ function displayPlayerRankings(filterDays) {
     // Filter out ratings that occur before daysSinceRelease - filterDays.
     let daysThreshold = daysSinceRelease - filterDays;
 
-    // There's very likely a better way to do this.
+    // There should be a better way to do this, but laziness.
     ratings.forEach(function(rating) {
         if (filterDays === -1 || rating["day"] >= daysThreshold) {
             if (!(rating["player_id"] in mostRecentPlayerRating)) {
@@ -88,12 +86,6 @@ function displayPlayerRankings(filterDays) {
             "</tr>"
         );
     });
-
-    $(".player-rating-history-link").on("click", function(event) {
-        let selectedPlayerId = parseInt($(event.target).data("playerid"));
-        $(".player-select").val(selectedPlayerId);
-        changePlayer();
-    });
 }
 
 $(".player-rankings-filter-button").on("click", function() {
@@ -101,13 +93,36 @@ $(".player-rankings-filter-button").on("click", function() {
     displayPlayerRankings(filterDays);
 });
 
-function getSetDate(set) {
-    let setDate = new Date(MTA_RELEASE_DATE.getTime());
-    setDate.setDate(setDate.getDate() + set["day"]);
-    return setDate;
+$(".player-rankings-list").on("click", ".player-rating-history-link", function(event) {
+    let selectedPlayerId = parseInt($(event.target).data("playerid"));
+    $(".player-select").val(selectedPlayerId);
+    displayPlayerRatingHistory();
+});
+
+/*  =====================
+    Player rating history
+    =====================
+ */
+function populatePlayerDropdown() {
+    sortedPlayers = Object.keys(players).sort(function(first, second) {
+        let firstName = players[first].toUpperCase();
+        let secondName = players[second].toUpperCase();
+        return (firstName < secondName) ? -1 : (firstName > secondName) ? 1 : 0;
+    });
+
+    sortedPlayers.forEach(function(key) {
+        $(".player-select").append("<option value='" + key + "'>" + players[key] + "</option>");
+    });
 }
 
-function displayPlayerSets(playerId) {
+function displayPlayerSets() {
+    $(".player-sets .player-set").remove();
+
+    let playerId = parseInt($(".player-select").val());
+    if (playerId === -1) {
+        return;
+    }
+
     playerSets = []
     sets.forEach(function(set) {
         if (set["player1_id"] === playerId || set["player2_id"] === playerId) {
@@ -151,17 +166,21 @@ function displayPlayerSets(playerId) {
     });
 }
 
-function changePlayer() {
-    $(".player-sets .player-set").remove();
-
-    let selectedPlayerId = parseInt($(".player-select").val());
-    if (selectedPlayerId != -1) {
-        displayPlayerSets(selectedPlayerId);
-    }
+function displayPlayerRatingGraph() {
+    
 }
 
-$(".player-select").on("change", changePlayer);
+function displayPlayerRatingHistory() {
+    displayPlayerSets();
+    displayPlayerRatingGraph();
+}
 
+$(".player-select").on("change", displayPlayerRatingHistory);
+
+/*  =========
+    Hydration
+    =========
+*/
 function initialLoad() {
     if (Object.keys(players).length === 0 || Object.keys(events).length === 0 || 
         ratings.length === 0 || sets.length === 0) {
