@@ -17,6 +17,7 @@ let events = {};
 let sets = [];
 let ratings = [];
 
+const RATING_FUDGE = 1000;
 const MTA_RELEASE_DATE = new Date(2018, 5, 22);
 
 function populatePlayerDropdown() {
@@ -115,8 +116,6 @@ function displayPlayerSets(playerId) {
             return rating["player_id"] === playerId && rating["day"] === set["day"];
         })["rating"];
 
-        console.log(events);
-
         $(".player-sets").append(
             "<tr class='player-set'>" +
                 "<td>" + players[set["player1_id"]] + "</td>" +
@@ -200,5 +199,11 @@ fetch("data/ratings.csv").then(response => response.text()).then(text => {
     });
 
     ratings = parsed["data"];
+
+    // Fudge ratings to be 1000 higher.
+    ratings.forEach(function(rating) {
+        rating["rating"] += RATING_FUDGE;
+    });
+
     initialLoad();
 });
