@@ -1,4 +1,4 @@
-let players = []
+let players = {}
 let ratings = []
 let sets = []
 let filterDays = -1;
@@ -35,7 +35,10 @@ function displayPlayerRanking() {
         return second["rating"] - first["rating"];
     });
 
-    console.log(ranking);
+    $(".player-rankings-list").empty();
+    ranking.forEach(function(rank, index) {
+        $("player-rankings-list").append("<div class='player-ranking'>" + (index + 1) + " - " + players[rank["player_id"]] + ": " + rank["rating"] + "</div>");
+    });
 }
 
 function update() {
@@ -53,7 +56,10 @@ fetch("data/player.csv").then(response => response.text()).then(text => {
         dynamicTyping: true,
     });
 
-    players = parsed["data"];
+    players = parsed["data"].reduce(function(map, obj) {
+        map[obj["id"]] = obj["name"];
+        return map;
+    }, {});
     update();
 });
 
