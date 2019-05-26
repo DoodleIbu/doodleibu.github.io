@@ -208,6 +208,9 @@ function displayPlayerRatingGraph() {
                 fill: false,
                 data: datapoints,
                 borderColor: "rgba(0, 0, 255, 0.5)",
+                backgroundColor: "rgba(0, 0, 255, 0.5)",
+                pointBorderColor: "rgba(0, 0, 255, 0.5)",
+                pointBackgroundColor: "rgba(0, 0, 255, 0.5)",
             }
         ]
     }
