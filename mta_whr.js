@@ -22,11 +22,11 @@ if (location.hostname === "") {
     ];
 }
 
-// Get the calendar date for when a set occurs, as opposed to "days since MTA release".
-function getSetDate(set) {
-    let setDate = new Date(MTA_RELEASE_DATE.getTime());
-    setDate.setDate(setDate.getDate() + set["day"]);
-    return setDate;
+// Get the calendar date given the "days since MTA release".
+function getDate(days) {
+    let date = new Date(MTA_RELEASE_DATE.getTime());
+    date.setDate(date.getDate() + days);
+    return date;
 }
 
 /*  ===============
@@ -115,10 +115,14 @@ function populatePlayerDropdown() {
     });
 }
 
+function getPlayerDropdownValue() {
+    return parseInt($(".player-select").val());
+}
+
 function displayPlayerSets() {
     $(".player-sets .player-set").remove();
 
-    let playerId = parseInt($(".player-select").val());
+    let playerId = getPlayerDropdownValue();
     if (playerId === -1) {
         return;
     }
@@ -144,7 +148,7 @@ function displayPlayerSets() {
             winnerName = players[set["player2_id"]];
         }
 
-        setDate = getSetDate(set);
+        setDate = getDate(set["day"]);
         let setDateString = setDate.getFullYear() + "-" + (setDate.getMonth() + 1) + "-" +
                             setDate.getDate();
 
@@ -167,7 +171,57 @@ function displayPlayerSets() {
 }
 
 function displayPlayerRatingGraph() {
-    
+    $(".player-rating-history-graph").hide();
+
+    let playerId = getPlayerDropdownValue();
+    if (playerId === -1) {
+        return;
+    }
+
+    let playerRatings = ratings.filter(function(rating) {
+        return rating["player_id"] === playerId;
+    });
+
+    let labels = [];
+    let datapoints = [];
+    playerRatings.forEach(function(rating) {
+        labels.push(getDate(rating["day"]));
+        datapoints.push(
+            {
+                x: getDate(rating["day"]),
+                y: rating["rating"],
+            }
+        );
+    });
+
+    console.log(labels);
+    console.log(datapoints);
+
+    let data = {
+        labels: labels,
+        datasets: [
+            {
+                label: "Rating",
+                fill: false,
+                data: datapoints,
+            }
+        ]
+    }
+
+    let options = {
+        title: {
+            text: "Rating"
+        }
+    }
+
+    let ctx = $(".player-rating-history-graph")[0].getContext("2d");
+    let ratingGraph = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: options,
+    });
+
+    $(".player-rating-history-graph").show();
 }
 
 function displayPlayerRatingHistory() {
