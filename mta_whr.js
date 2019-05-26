@@ -205,9 +205,9 @@ function displayPlayerRatingGraph() {
         labels: labels,
         datasets: [
             {
-                label: "Rating",
                 fill: false,
                 data: datapoints,
+                borderColor: "rgba(0, 0, 255, 0.5)",
             }
         ]
     }
@@ -215,7 +215,8 @@ function displayPlayerRatingGraph() {
     let options = {
         responsive: false,
         title: {
-            text: "Rating"
+            text: "Player Rating over Time",
+            display: true,
         },
         scales: {
             xAxes: [{
@@ -235,7 +236,10 @@ function displayPlayerRatingGraph() {
                     labelString: 'Rating'
                 }
             }]
-        }
+        },
+        legend: {
+            display: false
+        },
     }
 
     $(".player-rating-history-graph").prop({ width: 640, height: 320 });
