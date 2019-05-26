@@ -189,7 +189,7 @@ function displayPlayerRatingGraph() {
         datapoints.push(
             {
                 x: getDate(rating["day"]),
-                y: rating["rating"],
+                y: Math.round(rating["rating"]),
             }
         );
     });
@@ -206,6 +206,7 @@ function displayPlayerRatingGraph() {
     }
 
     let options = {
+        responsive: false,
         title: {
             text: "Rating"
         },
