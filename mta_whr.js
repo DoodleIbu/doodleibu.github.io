@@ -194,9 +194,6 @@ function displayPlayerRatingGraph() {
         );
     });
 
-    console.log(labels);
-    console.log(datapoints);
-
     let data = {
         labels: labels,
         datasets: [
@@ -211,6 +208,25 @@ function displayPlayerRatingGraph() {
     let options = {
         title: {
             text: "Rating"
+        },
+        scales: {
+            xAxes: [{
+                type: 'time',
+                time: {
+                    parser: "YYYY-MM-DD",
+                    tooltipFormat: "ll"
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Date'
+                }
+            }],
+            yAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Rating'
+                }
+            }]
         }
     }
 
