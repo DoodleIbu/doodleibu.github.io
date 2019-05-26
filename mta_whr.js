@@ -170,8 +170,15 @@ function displayPlayerSets() {
     });
 }
 
+// Define instance of the rating graph so we can destroy it.
+let ratingGraph = undefined;
+
 function displayPlayerRatingGraph() {
+
     $(".player-rating-history-graph").hide();
+    if (ratingGraph != undefined) {
+        ratingGraph.destroy();
+    }
 
     let playerId = getPlayerDropdownValue();
     if (playerId === -1) {
@@ -231,8 +238,9 @@ function displayPlayerRatingGraph() {
         }
     }
 
+    $(".player-rating-history-graph").prop({ width: 640, height: 320 });
     let ctx = $(".player-rating-history-graph")[0].getContext("2d");
-    let ratingGraph = new Chart(ctx, {
+    ratingGraph = new Chart(ctx, {
         type: 'line',
         data: data,
         options: options,
