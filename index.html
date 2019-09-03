@@ -7,42 +7,46 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.3/papaparse.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
     <style>
-        .player-rankings-list {
-            margin-top: 20px;
+        .player-rankings-filter-days-input {
+            width: 100px;
+            display: inline;
         }
 
         .player-rating-history-graph {
-            margin-top: 20px;
             display: none;
         }
 
-        .player-sets {
-            margin-top: 20px;
+        .player-select {
+            width: 700px;
+        }
+
+        .player-sets, .player-rankings-list {
+            margin-left: auto; 
+            margin-right: auto;
+            width: 700px;
         }
     </style>
 </head>
 
 <body>
-    <p class="feedback">
-        If you have any questions or feedback about this page, please contact ibuprofen in the Mario Tennis Aces Club discord.
-    </p>
+    <div id="player-rankings" class="text-center mt-md-3">
 
-    <p class="guide-shameless-plug">
-        If you need help in Mario Tennis Aces's Standard mode, check out <a href="https://docs.google.com/document/d/1u9KkaubaQaHZNp9KsS7-a5D-eNcpW321zu80n-PBRo4/edit">this guide!</a>
-    </p>
-
-    <div class="player-rankings">
         <h1>Mario Tennis Aces Club Standard Rankings</h1>
 
-        <span>Filter by players that have played within the last</span>
-        <input class="player-rankings-filter-days-input" type="number"></input>
-        <span>days.</span>
+        <div class="mt-md-3">
+            <span>Filter by players that have played within the last</span>
+            <input class="player-rankings-filter-days-input form-control" type="number"></input>
+            <span>days.</span>
 
-        <button class="player-rankings-filter-button">Filter!</button>
+            <button type="button" class="player-rankings-filter-button btn btn-primary">Filter!</button>
+        </div>
 
-        <table class="player-rankings-list">
-            <tr class="player-rankings-list-header">
+        <table class="player-rankings-list table mt-md-3">
+            <tr class="thead-light">
                 <th>Rank</th>
                 <th>Player</th>
                 <th>Rating</th>
@@ -50,19 +54,20 @@
         </table>
     </div>
 
-    <div id="player-rating-history" class="player-rating-history">
+    <div id="player-rating-history" class="text-center mt-md-3">
+
         <h1>Player Rating History</h1>
 
-        <select class="player-select">
+        <select class="player-select custom-select mt-md-3">
             <option value="-1">Select player</option>
         </select>
 
-        <div>
+        <div class="mt-md-3">
             <canvas class="player-rating-history-graph"></canvas>
         </div>
 
-        <table class="player-sets">
-            <tr class="player-sets-header">
+        <table class="player-sets table mt-md-3">
+            <tr class="thead-light">
                 <th>Player 1</th>
                 <th>Player 2</th>
                 <th>Winner</th>
