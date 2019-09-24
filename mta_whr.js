@@ -8,17 +8,17 @@ let ratings = [];
 
 // Use test data if run locally.
 if (location.hostname === "") {
-    players = {123: "test", 456: "test2"};
-    events = {123456: "shining finger sword"};
+    players = {"S123": "test", "S456": "test2"};
+    events = {"S123456": "shining finger sword"};
     sets = [
-        {"player1_id": 123, "player2_id": 456, "day": 1, "winner": "B", "event_id": 123456},
-        {"player1_id": 123, "player2_id": 456, "day": 2, "winner": "B", "event_id": 123456},
+        {"player1_id": "S123", "player2_id": "S456", "day": 1, "winner": "B", "event_id": "S123456"},
+        {"player1_id": "S123", "player2_id": "S456", "day": 2, "winner": "B", "event_id": "S123456"},
     ];
     ratings = [
-        {"player_id": 123, "day": 1, "rating": 20},
-        {"player_id": 456, "day": 1, "rating": -20},
-        {"player_id": 123, "day": 2, "rating": 40},
-        {"player_id": 456, "day": 2, "rating": -40},
+        {"player_id": "S123", "day": 1, "rating": 20},
+        {"player_id": "S456", "day": 1, "rating": -20},
+        {"player_id": "S123", "day": 2, "rating": 40},
+        {"player_id": "S456", "day": 2, "rating": -40},
     ];
 }
 
@@ -116,7 +116,7 @@ function populatePlayerDropdown() {
 }
 
 function getPlayerDropdownValue() {
-    return parseInt($(".player-select").val());
+    return $(".player-select").val();
 }
 
 function displayPlayerSets() {
