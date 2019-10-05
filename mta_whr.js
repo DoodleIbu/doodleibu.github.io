@@ -94,7 +94,7 @@ $(".player-rankings-filter-button").on("click", function() {
 });
 
 $(".player-rankings-list").on("click", ".player-rating-history-link", function(event) {
-    let selectedPlayerId = parseInt($(event.target).data("playerid"));
+    let selectedPlayerId = $(event.target).data("playerid");
     $(".player-select").val(selectedPlayerId);
     displayPlayerRatingHistory();
 });
