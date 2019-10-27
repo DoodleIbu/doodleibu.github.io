@@ -6,22 +6,6 @@ let events = {};
 let sets = [];
 let ratings = [];
 
-// Use test data if run locally.
-if (location.hostname === "") {
-    players = {"S123": "test", "S456": "test2"};
-    events = {"S123456": "shining finger sword"};
-    sets = [
-        {"player1_id": "S123", "player2_id": "S456", "day": 1, "winner": "B", "event_id": "S123456"},
-        {"player1_id": "S123", "player2_id": "S456", "day": 2, "winner": "B", "event_id": "S123456"},
-    ];
-    ratings = [
-        {"player_id": "S123", "day": 1, "rating": 20},
-        {"player_id": "S456", "day": 1, "rating": -20},
-        {"player_id": "S123", "day": 2, "rating": 40},
-        {"player_id": "S456", "day": 2, "rating": -40},
-    ];
-}
-
 // Get the calendar date given the "days since MTA release".
 function getDate(days) {
     let date = new Date(MTA_RELEASE_DATE.getTime());
@@ -267,20 +251,17 @@ $(".player-select").on("change", displayPlayerRatingHistory);
     Hydration
     =========
 */
-function initialLoad() {
-    if (Object.keys(players).length === 0 || Object.keys(events).length === 0 || 
-        ratings.length === 0 || sets.length === 0) {
-        return;
-    }
+let DATA_SOURCE = "https://raw.githubusercontent.com/DoodleIbu/mta-whr/master/csv/";
 
+function initialLoad() {
     populatePlayerDropdown();
     displayPlayerRankings(-1);
 }
 
-initialLoad();
+function parsePlayers(playersText) {
+    console.log(playersText);
 
-fetch("data/players.csv").then(response => response.text()).then(text => {
-    let parsed = Papa.parse(text, {
+    let parsed = Papa.parse(playersText, {
         header: true,
         skipEmptyLines: true,
         dynamicTyping: true,
@@ -290,11 +271,10 @@ fetch("data/players.csv").then(response => response.text()).then(text => {
         map[obj["id"]] = obj["name"];
         return map;
     }, {});
-    initialLoad();
-});
+}
 
-fetch("data/events.csv").then(response => response.text()).then(text => {
-    let parsed = Papa.parse(text, {
+function parseEvents(eventsText) {
+    let parsed = Papa.parse(eventsText, {
         header: true,
         skipEmptyLines: true,
         dynamicTyping: true,
@@ -304,22 +284,20 @@ fetch("data/events.csv").then(response => response.text()).then(text => {
         map[obj["id"]] = obj["name"];
         return map;
     }, {});
-    initialLoad();
-});
+}
 
-fetch("data/sets.csv").then(response => response.text()).then(text => {
-    let parsed = Papa.parse(text, {
+function parseSets(setsText) {
+    let parsed = Papa.parse(setsText, {
         header: true,
         skipEmptyLines: true,
         dynamicTyping: true,
     });
 
     sets = parsed["data"];
-    initialLoad();
-});
+}
 
-fetch("data/ratings.csv").then(response => response.text()).then(text => {
-    let parsed = Papa.parse(text, {
+function parseRatings(ratingsText) {
+    let parsed = Papa.parse(ratingsText, {
         header: true,
         skipEmptyLines: true,
         dynamicTyping: true,
@@ -331,6 +309,17 @@ fetch("data/ratings.csv").then(response => response.text()).then(text => {
     ratings.forEach(function(rating) {
         rating["rating"] += RATING_FUDGE;
     });
+}
 
+Promise.all([
+    fetch(DATA_SOURCE + "players.csv").then(response => response.text()),
+    fetch(DATA_SOURCE + "events.csv").then(response => response.text()),
+    fetch(DATA_SOURCE + "sets.csv").then(response => response.text()),
+    fetch(DATA_SOURCE + "ratings.csv").then(response => response.text())
+]).then(([playersText, eventsText, setsText, ratingsText]) => {
+    parsePlayers(playersText);
+    parseEvents(eventsText);
+    parseSets(setsText);
+    parseRatings(ratingsText);
     initialLoad();
 });
