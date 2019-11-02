@@ -72,6 +72,10 @@ function displayPlayerRankings(filterDays) {
     });
 }
 
+function setPlayerRankingsFilterDaysInput(filterDays) {
+    $(".player-rankings-filter-days-input").val(filterDays);
+}
+
 $(".player-rankings-filter-button").on("click", function() {
     filterDays = $(".player-rankings-filter-days-input").val();
     displayPlayerRankings(filterDays);
@@ -252,10 +256,12 @@ $(".player-select").on("change", displayPlayerRatingHistory);
     =========
 */
 let DATA_SOURCE = "https://raw.githubusercontent.com/DoodleIbu/mta-whr/master/csv/";
+let DEFAULT_FILTER_DAYS = 60;
 
 function initialLoad() {
     populatePlayerDropdown();
-    displayPlayerRankings(-1);
+    displayPlayerRankings(DEFAULT_FILTER_DAYS);
+    setPlayerRankingsFilterDaysInput(DEFAULT_FILTER_DAYS);
 }
 
 function parsePlayers(playersText) {
