@@ -70,7 +70,7 @@ function displayPlayerRankings(filterDays) {
 
         $(".player-rankings-list").append(
             "<tr class='player-rank'>" +
-                "<td>" + (placing) + "</td>" +
+                "<td>" + rank + "</td>" +
                 "<td><a class='player-rating-history-link' href='#player-rating-history' data-playerid='" + ranking["player_id"] + "'>" +
                     players[ranking["player_id"]] + "</a></td>" +
                 "<td>" + Math.round(ranking["rating"]) + "</td>" +
