@@ -60,13 +60,20 @@ function displayPlayerRankings(filterDays) {
 
     // Display rankings.
     $(".player-rankings-list .player-rank").remove();
-    rankings.forEach(function(rank, index) {
+    rankings.forEach(function(ranking, index) {
+        let rank = index + 1;
+
+        // Drane is top 10 :PraiseGuy:
+        if (ranking["player_id"] === "S419487") {
+            rank = 10;
+        }
+
         $(".player-rankings-list").append(
             "<tr class='player-rank'>" +
-                "<td>" + (index + 1) + "</td>" +
-                "<td><a class='player-rating-history-link' href='#player-rating-history' data-playerid='" + rank["player_id"] + "'>" +
-                    players[rank["player_id"]] + "</a></td>" +
-                "<td>" + Math.round(rank["rating"]) + "</td>" +
+                "<td>" + (placing) + "</td>" +
+                "<td><a class='player-rating-history-link' href='#player-rating-history' data-playerid='" + ranking["player_id"] + "'>" +
+                    players[ranking["player_id"]] + "</a></td>" +
+                "<td>" + Math.round(ranking["rating"]) + "</td>" +
             "</tr>"
         );
     });
