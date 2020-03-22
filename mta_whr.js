@@ -263,7 +263,7 @@ $(".player-select").on("change", displayPlayerRatingHistory);
     =========
 */
 let DATA_SOURCE = "https://raw.githubusercontent.com/DoodleIbu/mta-whr/master/csv/";
-let DEFAULT_FILTER_DAYS = 60;
+let DEFAULT_FILTER_DAYS = 120;
 
 function initialLoad() {
     populatePlayerDropdown();
